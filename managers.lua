@@ -7,7 +7,7 @@ local ComponentManager = {
 }
 
 function ComponentManager:addComponents(entity, components)
-    for k, v in pairs(components) do
+    for _, v in pairs(components) do
         if self.components[v.name] == nil then
             self.components[v.name] = {}
         end
@@ -16,7 +16,7 @@ function ComponentManager:addComponents(entity, components)
 end
 
 function ComponentManager:removeAllForEntity(entity)
-    for k, v in pairs(self.components) do
+    for _, v in pairs(self.components) do
         v[entity] = nil
     end
 end
@@ -26,7 +26,7 @@ function ComponentManager:removeForEntity(entity, componentName)
 end
 
 function ComponentManager:resetAll()
-    for k, v in pairs(self.components) do
+    for k, _ in pairs(self.components) do
         self.components[k] = {}
     end
 end
@@ -83,7 +83,7 @@ function SystemManager:addSystem(name, system)
 end
 
 function SystemManager:runSystems(entityManager, componentManager)
-    for key, system in pairs(self.systems) do
+    for _, system in pairs(self.systems) do
         --Not using the key
         system(entityManager, componentManager)
     end
