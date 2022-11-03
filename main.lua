@@ -18,11 +18,28 @@ function love.draw()
     love.graphics.rectangle("fill", x, y, w, h)
 end]]--
 
+function Err(x)
+    local errMsg = "Error: " .. x
+    return errMsg
+end
+
+function LoadMods()
+    local dir = love.filesystem.getSourceBaseDirectory()
+    print(dir .. "/mods/ModFactory.lua")
+    return love.filesystem.load(dir .. "/mods/ModFactory.lua") or love.filesystem.load("mods/ModFactory.lua")
+end
+
+ModFactory = LoadMods() or function() return {x=50, y=50} end
+
+print(ModFactory)
+
+mods = ModFactory()
+
 
 function love.load()
     local test = Vector2.New(100,100)
-    rectwidth = test.x
-    rectheight = test.y
+    rectwidth = mods.x
+    rectheight = mods.y
 
     -- arguments are: x, y, angle, scalex, scaley, offsetx, offsety
     transform = love.math.newTransform(200, 200, math.pi/4, 1, 1, rectwidth / 2, rectheight / 2)
